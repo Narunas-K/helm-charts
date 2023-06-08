@@ -71,6 +71,8 @@ main() {
     cp -R "./charts/$chartName" "./.cpa-stage/$chartName/"
     # Merge CNAB specific configuration into values.yaml
     valuesPath="cnab-config/$chartName/values.yaml" yq -i '. *= load(env(valuesPath))' "./.cpa-stage/$chartName/$chartName/values.yaml"
+    tree .cpa-stage
+    cat ./cpa-stage/$chartName"/$chartName"/values.yaml
 
     echo "Releasing CNAB package.."
     az login --service-principal -u "$AZURE_K8S_APP_MARKETPLACE_SP_ID" -p "$AZURE_K8S_APP_MARKETPLACE_SP_SECRET" --tenant "$AZURE_K8S_APP_MARKETPLACE_TENANT_ID" -o none
